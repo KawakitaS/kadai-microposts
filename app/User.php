@@ -53,9 +53,12 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id')->withTimestamps();
     }
     
-    public function follow($userId) { // 既にフォローしているかの確認 
-    $exist = $this->is_following($userId); // 自分自身ではないかの確認 
-    $its_me = $this->id == $userId;
+public function follow($userId) { // 既にフォローしているかの確認 
+
+$exist = $this->is_following($userId); // 自分自身ではないかの確認 
+
+$its_me = $this->id == $userId;
+
     if ($exist || $its_me) {
 
         // 既にフォローしていれば何もしない
@@ -71,11 +74,10 @@ class User extends Model implements AuthenticatableContract,
         return true;
 
     }
-        
-    }
-    
-    public function unfollow($userId)
-    {
+}
+
+public function unfollow($userId)
+{
     // 既にフォローしているかの確認
     $exist = $this->is_following($userId);
     // 自分自身ではないかの確認
@@ -89,8 +91,8 @@ class User extends Model implements AuthenticatableContract,
         // 未フォローであれば何もしない
         return false;
     }
-        
-    }
+}
+
     
     public function is_following($userId) {
         return $this->followings()->where('follow_id', $userId)->exists();
